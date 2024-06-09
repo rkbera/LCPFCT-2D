@@ -385,7 +385,7 @@ C	PRINTING THE VALUES OF VELX, VELY, ND AT DIFFERENT TIMES
 	write(timestamp, '(I4.4)') JSTEP ! Format step number with leading zeros
 
         ! Construct the filename with the directory and timestamp
-        FILENAME = trim(DIR)// '/plasma_data_' //trim(timestamp)
+        FILENAME = trim(DIR)// '/plasma_data_' //trim(timestamp)//'.dat'
 
         ! Open the file for writing
 	open(unit=10,file=trim(FILENAME),status='replace',action='write')
@@ -394,7 +394,7 @@ C	PRINTING THE VALUES OF VELX, VELY, ND AT DIFFERENT TIMES
 	DO 18 J = 1, NY
 	DO 19 I = 1, NX
 
-	WRITE(10,*) DEN(I,J),DENB(I,J),ELECX(I,J)
+	WRITE(10,*) XCELL(I), YCELL(J), DEN(I,J),DENB(I,J),ELECX(I,J)
 
  19     CONTINUE
  18     CONTINUE
@@ -408,14 +408,14 @@ C	PRINTING THE VALUES OF VELX, VELY, ND AT DIFFERENT TIMES
         print*, 'writing particle data...'
         
 	! Construct the filename with the directory and timestamp
-        FILENAME = trim(DIR_2)// '/tp_data_' //trim(timestamp)
+        FILENAME = trim(DIR_2)// '/tp_data_' //trim(timestamp)//'.dat'
 
         ! Open the file for writing
 	open(unit=20,file=trim(FILENAME),status='replace',action='write')
 	!CALL PRINT4 ('tp_data',JSTEP,LOUTP)
 
 	DO P= 1, NP     
-	WRITE(20,*)  XP0(P),YP0(P),EP(P)
+	WRITE(20,*)  XP0(P),YP0(P), VPX0(P), VPY0(P), EP(P)
 	ENDDO
 
 	 ! Close the file
