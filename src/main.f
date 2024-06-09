@@ -96,6 +96,7 @@ C	COMMON-GLOBLE-BLOCK
 	COMMON / GRID / XINT,YINT,XCELL,YCELL,DX,DY,LX,LY,PI
 C~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
+        print*, 'Simulation starts....'
 
 C=============================================================
 C	INITIALIZING VARIABLES FROM INPUT FILE
@@ -193,14 +194,6 @@ C--------------------------------------------------------
        ! Generate random numbers for distributing test particle randomly
        call GENERATE_RANDOM(NP, RAND)
        call GENERATE_RANDOM_2(NP, RAND2)
-
-!       DO I=1,NP
-!       print*, "RAND, RAND2 :", RAND(I), RAND2(I)
-!       print*, ''
-!       ENDDO
-!       call exit(123)
-
-
 
 C-------------------------------------
 !! Initial position of the particle
@@ -305,6 +298,10 @@ C~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 c--------------------------------------
 	!OPEN(UNIT=55,file='energy.dat',STATUS='UNKNOWN')
 
+C~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+         print*, 'Initialization successful!'
+         print*, 'Entering Time loop ...'
+
 C+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 C	BEGINING OF TIME STEPS
 	
@@ -312,8 +309,7 @@ C	BEGINING OF TIME STEPS
 
 	DO 13 TSTEP = INISTP, MAXSTP
 !--------------------------------------------
-
-
+         print*, 'Timestep =', TSTEP-1, ', dt =', DT, ', Time =', TIME
 C---------------------------------------------------------------------
 C		ADJUSTING DT TO SATISFY COURANT CONDITION
 	
@@ -382,8 +378,9 @@ c------------------------------------
 	
 	IF ( (JSTEP/IPRINT)*IPRINT .EQ. JSTEP ) THEN
 C-------
-C	PRINTING THE VALUES OF VELX, VELY, ND AT DIFFERENT TIMES
+        print*, 'writing plasma data...'
 
+C	PRINTING THE VALUES OF VELX, VELY, ND AT DIFFERENT TIMES
 	! Generate a timestamp or step number for the filename
 	write(timestamp, '(I4.4)') JSTEP ! Format step number with leading zeros
 
@@ -407,6 +404,9 @@ C	PRINTING THE VALUES OF VELX, VELY, ND AT DIFFERENT TIMES
 
 
         IF (TPS .EQ. 1) THEN
+
+        print*, 'writing particle data...'
+        
 	! Construct the filename with the directory and timestamp
         FILENAME = trim(DIR_2)// '/tp_data_' //trim(timestamp)
 
@@ -610,7 +610,8 @@ C------------- UPGRADE PARTICLE POSITION
 
 	
  13	CONTINUE                  !CONTINUATION OF TIME STEP
-	
+
+	print*, "Simulation ended successfully!"
 C++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 	
 	END PROGRAM
