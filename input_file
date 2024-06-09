@@ -1,0 +1,50 @@
+! ---------------------------------------------------------
+! CREATED BY RATAN BERA
+! Input values in normalized units
+! Normalization: length--> length/c/pmega, time -- t/omega_pe,...
+! density-->density/n_plasma_equilibrium, velocity --> v/c, E--> E/m*c*omega/e  
+!----------------------------------------------------------------
+
+LX = 100                !length in x-direction
+LY = 100                !length in y-direction
+
+NX = 100                !No. of Cells in x-direction
+NY = 100                !No. of Cells in y-direction
+
+TIME = 0.0             !initial time
+
+COURNT = 0.2           !CFL Number
+ 
+MAXSTP = 501           !Max timestep to run
+
+!Do not need to change
+INISTP = 1             !timestep initialization
+DT = 5e-2              !DT initilization 
+DTMAX = 5e-2           !Max DT
+
+
+LOUT = 50              !timesetp for output file saving
+IPRINT = 50            !output print file cadence
+
+! plasma parameters
+
+
+
+! Beam parameters
+BEAM = 1               !0(OFF) or 1(ON) for electron beam
+VB = 0.999999          !normalized velocity of beam
+density_beam = 0.5     !normalized beam dnsity
+
+!Test Partilce Simulation (TPS) parameters
+TPS = 0                !0(OFF) or 1(ON)
+NP = 100               !No. of test particles
+LOUTP = 50             !output file timestep
+
+
+
+
+
+
+
+
+
