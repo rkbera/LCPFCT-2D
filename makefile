@@ -14,6 +14,10 @@ all: $(EXECUTABLE)
 $(EXECUTABLE): $(OBJ_FILES)
 	$(FC) $(FCFLAGS) -o $@ $^
 
+	@echo "**********************************"
+	@echo "Build successful"
+	@echo "**********************************"
+
 %.o: $(SRC_DIR)/%.f
 	$(FC) $(FCFLAGS) -c $< -o $@
 

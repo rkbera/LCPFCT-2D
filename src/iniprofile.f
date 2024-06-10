@@ -118,8 +118,8 @@ C~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 	NY = NPTY
 
         ! beam size
-        SIGMAX=  2.0D0;
-        SIGMAY = 2.0D0;
+        SIGMAX=  10.0D0;
+        SIGMAY = 10.0D0;
 	
 C=================================================================
 C	DENSITY+PERTURBATION 
@@ -134,8 +134,8 @@ c--------------------------------
 !	if (YCELL(J) .ge. -2.0d0 .and. YCELL(J) .le. 2.0d0 ) then
 
 !	  DENB(I,J)=0.5d0
-	  DENB(I,J)= DENB0*DEXP(-((((XCELL(I)-3.0D0)**2)/SIGMAX) 
-     &    +(YCELL(J)**2 )/SIGMAY)) 
+	  DENB(I,J)= DENB0*DEXP(-((((XCELL(I)-20.0D0)**2)/(2.0*SIGMAX)) 
+     &    +(YCELL(J)**2 )/(2.0*SIGMAY)) ) 
           
       
 !	endif	

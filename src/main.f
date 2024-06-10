@@ -90,6 +90,11 @@ C---------------------------------------------
       INTEGER BEAM, TPS
 
       REAL*8 density_beam, velocity_beam, DENB0, VB0
+
+      ! Real time calculation taken for each time steps
+      INTEGER start, finish, count_rate
+      REAL elapsed_time
+
 C~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 C	COMMON-GLOBLE-BLOCK	
 	COMMON / DATAP / NX,NY,NXP,NYP
@@ -206,8 +211,9 @@ C	LOADING INPUT FROM FILE
 !------ check input values
       !PRINT *, 'BEAM =', BEAM
       !PRINT *, 'TPS =',  TPS
-     
-	!call exit(123)
+      !PRINT*, velocity_beam
+
+!	call exit(123)
 
 C--------------------------------------------------------
 	NX = NPTX
@@ -339,6 +345,9 @@ C~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
          print*, 'Initialization successful!'
          print*, 'Entering Time loop ...'
 
+         ! Get the count rate of the system clock
+         CALL SYSTEM_CLOCK(COUNT_RATE=count_rate)
+         elapsed_time = 0.0d0
 C+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 C	BEGINING OF TIME STEPS
 	
@@ -346,7 +355,12 @@ C	BEGINING OF TIME STEPS
 
 	DO 13 TSTEP = INISTP, MAXSTP
 !--------------------------------------------
-         print*, 'Timestep =', TSTEP-1, ', dt =', DT, ', Time =', TIME
+         ! Get the start time
+         CALL SYSTEM_CLOCK(COUNT=start)
+        
+         
+         print*, 'Timestep =', TSTEP-1, ', dt =', DT, ', Time =',TIME,
+     &         ', elapsed time =', elapsed_time, 'sec'
 C---------------------------------------------------------------------
 C		ADJUSTING DT TO SATISFY COURANT CONDITION
 	
@@ -643,12 +657,23 @@ C------------- UPGRADE PARTICLE POSITION
 1000	CONTINUE
 	
         END IF
-!------------------------------------------
 
+
+!-------------------------------------------        
+        ! Get the finish time
+        CALL SYSTEM_CLOCK(COUNT=finish)
+
+        ! Calculate the elapsed time in seconds
+        elapsed_time = REAL(finish - start) / REAL(count_rate)
+
+       
+!------------------------------------------
 	
  13	CONTINUE                  !CONTINUATION OF TIME STEP
 
+        
 	print*, "Simulation ended successfully!"
+
 C++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 	
 	END PROGRAM
