@@ -1,4 +1,4 @@
-# LCPFCT_2D
+# LCPFCT-2D
 This is a 2D multi-fluid code based on the LCPFCT scheme
 - It solves a coupled set of relativistic fluid-Maxwell equations - suitable for laser/beam-plasma interaction system
 - A Test Particle Simulation (TPS) module is also added to acquire some knowledge of the kinetic properties of particles
@@ -9,7 +9,7 @@ This is a 2D multi-fluid code based on the LCPFCT scheme
 
 
 # EXECUTION
-- save the code- "LCPFCT_2D" and go to inside the directory "$cd LCPFCT_2D"
+- save the code- "LCPFCT-2D" and go to inside the directory "$cd LCPFCT-2D"
 - run "$ make all", it will create the executable "lcpfct2D"
 - To clean the executable, run "make clean" on the same directory
   
@@ -18,6 +18,9 @@ This is a 2D multi-fluid code based on the LCPFCT scheme
 - save "input_file" in the directory "run_simulation" directory. A test "input_file" for beam-plasma system is given inside the "LCPFCT_2D" code
 - then run "$ /path-to-the-executable/lcpfct2D input_file"
 - It will create data at different time steps. The data will be saved in two folders "PLASMA_DATA" and "TEST_PARTICLE_DATA"
+
+# FOR Plotting data
+- Python based plotting files are also given for test inside the LCPFCT-2D/
 
 
   
