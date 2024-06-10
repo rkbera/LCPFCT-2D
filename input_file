@@ -8,14 +8,14 @@
 LX = 100                !length in x-direction
 LY = 100                !length in y-direction
 
-NX = 100                !No. of Cells in x-direction
-NY = 100                !No. of Cells in y-direction
+NX = 50                !No. of Cells in x-direction
+NY = 50                !No. of Cells in y-direction
 
 TIME = 0.0             !initial time
 
 COURNT = 0.2           !CFL Number
  
-MAXSTP = 501           !Max timestep to run
+MAXSTP = 101           !Max timestep to run
 
 !Do not need to change
 INISTP = 1             !timestep initialization
@@ -32,11 +32,11 @@ IPRINT = 50            !output print file cadence
 
 ! Beam parameters
 BEAM = 1               !0(OFF) or 1(ON) for electron beam
-VB = 0.999999          !normalized velocity of beam
+velocity_beam = 0.999999 !normalized velocity of beam
 density_beam = 0.5     !normalized beam dnsity
 
 !Test Partilce Simulation (TPS) parameters
-TPS = 0                !0(OFF) or 1(ON)
+TPS = 1                !0(OFF) or 1(ON)
 NP = 100               !No. of test particles
 LOUTP = 50             !output file timestep
 

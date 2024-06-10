@@ -78,7 +78,7 @@ C----------------PARTICLE PARAMETERS
 	REAL*8 EPX,EPY,EPZ,BPX,BPY,BPZ
 	real*8 DTH
 
-C-----------------
+C---------------------------------------------
       character(len=100) :: DIR, DIR_2, FILENAME
       character(len=20) :: timestamp
       
@@ -89,6 +89,7 @@ C-----------------
 
       INTEGER BEAM, TPS
 
+      REAL*8 density_beam, velocity_beam, DENB0, VB0
 C~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 C	COMMON-GLOBLE-BLOCK	
 	COMMON / DATAP / NX,NY,NXP,NYP
@@ -111,12 +112,39 @@ C	INITIALIZING VARIABLES FROM INPUT FILE
 	MAXSTP = 100
 	DTMAX = 1.0
 	DT = 0.1
-       
+        
+
         BEAM = 0
 
         TPS = 0
 	NP = 100
 	LOUTP = 10
+
+          DO  I = 1,NX
+           DO J = 1,NY
+                
+                DEN(I,J) = 1.0D0        
+
+                ELECX(I,J)=0.0D0
+                ELECY(I,J)=0.0D0
+                ELECZ(I,J)=0.0D0
+
+                VELX(I,J)= 0.0D0        
+                VELY(I,J)= 0.0D0
+                VELZ(I,J)= 0.0D0
+
+                BX(I,J)= 0.0D0
+                BY(I,J)= 0.0D0
+                BZ(I,J)= 0.0d0
+         
+                DENB(I,J) = 0.0D0
+                VBLX(I,J)= 0.0D0
+                VBLY(I,J)= 0.0D0
+                VBLZ(I,J)= 0.0D0
+
+           ENDDO
+         ENDDO
+
 
 
 C~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -157,6 +185,10 @@ C	LOADING INPUT FROM FILE
 
           ELSE IF (PARAM_NAME .EQ. 'BEAM') THEN
               READ(PARAM_VALUE, *) BEAM          
+          ELSE IF (PARAM_NAME .EQ. 'density_beam') THEN
+              READ(PARAM_VALUE, *) density_beam
+          ELSE IF (PARAM_NAME .EQ. 'velocity_beam') THEN
+              READ(PARAM_VALUE, *) velocity_beam
 
           ELSE IF (PARAM_NAME .EQ. 'TPS') THEN
               READ(PARAM_VALUE, *) TPS
@@ -258,10 +290,15 @@ C	SETTING CELL-CENTRE LOCATIONS
 
 	
 C~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-C	CALLING SUBROUTINE INDATA FOR INITIAL VALUES
+C	CALLING SUBROUTINE INDATA FOR INITIAL PROFILES 
 	
-	CALL INDATA(VELX,VELY,VELZ,DEN,VBLX,VBLY,VBLZ,DENB,
-     &     ELECX,ELECY,ELECZ,BX,BY,BZ)
+	CALL PLASMA_INIPROF(DEN,VELX,VELY,VELZ,ELECX,ELECY,ELECZ,BX,BY,BZ)
+      
+        IF (BEAM .EQ. 1) THEN
+        DENB0 = density_beam
+        VB0  = velocity_beam
+        CALL BEAM_INIPROF(DENB,VBLX,VBLY,VBLZ,DENB0,VB0)
+        END IF
 C~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 	DIVB(1:NX,1)=0.0D0; DIVB(1,1:NY)=0.0D0;DIVB(NX,1:NY)=0.0D0;
 	DIVB(1:NX,NY)=0.0D0;
